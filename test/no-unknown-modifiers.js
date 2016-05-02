@@ -9,22 +9,14 @@ const ruleTester = new RuleTester({
 });
 
 const ruleError = {ruleId: 'no-unknown-modifiers'};
-const header = `const test = require('ava');\n`;
+const header = `const test = require('tape');\n`;
 
 test(() => {
 	ruleTester.run('no-unknown-modifiers', rule, {
 		valid: [
 			`${header} test(t => {});`,
-			`${header} test.after(t => {});`,
-			`${header} test.afterEach(t => {});`,
-			`${header} test.before(t => {});`,
-			`${header} test.beforeEach(t => {});`,
-			`${header} test.cb(t => {});`,
-			`${header} test.cb.only(t => {});`,
 			`${header} test.only(t => {});`,
-			`${header} test.serial(t => {});`,
 			`${header} test.skip(t => {});`,
-			`${header} test.todo(t => {});`,
 			// shouldn't be triggered since it's not a test file
 			`test.foo(t => {});`
 		],
@@ -42,19 +34,13 @@ test(() => {
 				]
 			},
 			{
-				code: `${header} test.beforeeach(t => {});`,
-				errors: [
-					{...ruleError, message: 'Unknown test modifier `beforeeach`.'}
-				]
-			},
-			{
 				code: `${header} test.c.only(t => {});`,
 				errors: [
 					{...ruleError, message: 'Unknown test modifier `c`.'}
 				]
 			},
 			{
-				code: `${header} test.cb.onlu(t => {});`,
+				code: `${header} test.only.onlu(t => {});`,
 				errors: [
 					{...ruleError, message: 'Unknown test modifier `onlu`.'}
 				]

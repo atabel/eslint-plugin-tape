@@ -9,44 +9,42 @@ const ruleTester = new RuleTester({
 });
 
 const errors = [{ruleId: 'test-ended'}];
-const header = `const test = require('ava');\n`;
+const header = `const test = require('tape');\n`;
 
 test(() => {
 	ruleTester.run('test-ended', rule, {
 		valid: [
-			header + 'test.cb(function (t) { t.pass(); t.end(); });',
-			header + 'test.cb(function foo(t) { t.pass(); t.end(); });',
-			header + 'test.cb(t => { t.pass(); t.end(); });',
-			header + 'test.cb(t => { t.end(); });',
-			header + 'test.cb(t => { t.end(); t.pass(); });',
-			header + 'test.cb(t => { fn(t.end); });',
-			header + 'test.cb.only(t => { t.end(); });',
-			header + 'test.cb.skip.only(t => { t.end(); });',
-			header + 'test.only.cb.skip(t => { t.end(); });',
-			// shouldn't be triggered since it's not a callback test
-			header + 'test(t => { t.pass(); });',
+			header + 'test(function (t) { t.pass(); t.end(); });',
+			header + 'test(function foo(t) { t.pass(); t.end(); });',
+			header + 'test(t => { t.pass(); t.end(); });',
+			header + 'test(t => { t.end(); });',
+			header + 'test(t => { t.end(); t.pass(); });',
+			header + 'test(t => { fn(t.end); });',
+			header + 'test.only(t => { t.end(); });',
+			header + 'test.skip.only(t => { t.end(); });',
+			header + 'test.only.skip(t => { t.end(); });',
 			// shouldn't be triggered since it's not a test file
-			'test.cb(t => {});'
+			'test(t => {});'
 		],
 		invalid: [
 			{
-				code: header + 'test.cb(function (t) { t.pass(); });',
+				code: header + 'test(function (t) { t.pass(); });',
 				errors
 			},
 			{
-				code: header + 'test.cb(t => { t.pass(); });',
+				code: header + 'test(t => { t.pass(); });',
 				errors
 			},
 			{
-				code: header + 'test.cb(t => {});',
+				code: header + 'test(t => {});',
 				errors
 			},
 			{
-				code: header + 'test.cb.skip.only(t => {});',
+				code: header + 'test.skip.only(t => {});',
 				errors
 			},
 			{
-				code: header + 'test.only.cb.skip(t => {});',
+				code: header + 'test.only.skip(t => {});',
 				errors
 			}
 		]

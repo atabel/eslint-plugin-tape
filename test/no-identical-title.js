@@ -9,7 +9,7 @@ const ruleTester = new RuleTester({
 });
 
 const errors = [{ruleId: 'no-identical-title'}];
-const header = `const test = require('ava');\n`;
+const header = `const test = require('tape');\n`;
 
 test(() => {
 	ruleTester.run('no-identical-title', rule, {

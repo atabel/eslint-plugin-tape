@@ -3,7 +3,7 @@ var espurify = require('espurify');
 var assign = require('object-assign');
 var deepStrictEqual = require('deep-strict-equal');
 
-var avaImportDeclarationAst = {
+var tapeImportDeclarationAst = {
 	type: 'ImportDeclaration',
 	specifiers: [
 		{
@@ -16,11 +16,11 @@ var avaImportDeclarationAst = {
 	],
 	source: {
 		type: 'Literal',
-		value: 'ava'
+		value: 'tape'
 	}
 };
 
-var avaVariableDeclaratorAst = {
+var tapeVariableDeclaratorAst = {
 	type: 'VariableDeclarator',
 	id: {
 		type: 'Identifier',
@@ -35,7 +35,7 @@ var avaVariableDeclaratorAst = {
 		arguments: [
 			{
 				type: 'Literal',
-				value: 'ava'
+				value: 'tape'
 			}
 		]
 	}
@@ -63,19 +63,19 @@ function hasTestModifier(node, mod) {
 	return false;
 }
 
-module.exports = function createAvaRule() {
+module.exports = function createtapeRule() {
 	var isTestFile = false;
 	var currentTestNode = null;
 
 	/* eslint quote-props: [2, "as-needed"] */
 	var predefinedRules = {
 		ImportDeclaration: function (node) {
-			if (!isTestFile && deepStrictEqual(espurify(node), avaImportDeclarationAst)) {
+			if (!isTestFile && deepStrictEqual(espurify(node), tapeImportDeclarationAst)) {
 				isTestFile = true;
 			}
 		},
 		VariableDeclarator: function (node) {
-			if (!isTestFile && deepStrictEqual(espurify(node), avaVariableDeclaratorAst)) {
+			if (!isTestFile && deepStrictEqual(espurify(node), tapeVariableDeclaratorAst)) {
 				isTestFile = true;
 			}
 		},

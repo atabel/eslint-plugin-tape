@@ -1,13 +1,13 @@
 'use strict';
-var createAvaRule = require('../create-ava-rule');
+var createTapeRule = require('../create-tape-rule');
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTapeRule();
 	var endCalled = false;
 
-	return ava.merge({
+	return tape.merge({
 		'MemberExpression': function (node) {
-			if (!ava.isTestFile || !ava.currentTestNode || !ava.hasTestModifier('cb')) {
+			if (!tape.isTestFile || !tape.currentTestNode) {
 				return;
 			}
 
@@ -16,18 +16,18 @@ module.exports = function (context) {
 			}
 		},
 		'CallExpression:exit': function (node) {
-			if (!ava.isTestFile || !ava.currentTestNode || !ava.hasTestModifier('cb')) {
+			if (!tape.isTestFile || !tape.currentTestNode) {
 				return;
 			}
 
-			if (ava.currentTestNode === node) {
+			if (tape.currentTestNode === node) {
 				// leaving test function
 				if (endCalled) {
 					endCalled = false;
 				} else {
 					context.report({
 						node: node,
-						message: 'Callback test was not ended. Make sure to explicitly end the test with `t.end()`.'
+						message: 'Test was not ended. Make sure to explicitly end the test with `t.end()`.'
 					});
 				}
 			}

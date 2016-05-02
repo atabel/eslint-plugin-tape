@@ -1,14 +1,13 @@
-# eslint-plugin-ava [![Build Status](https://travis-ci.org/sindresorhus/eslint-plugin-ava.svg?branch=master)](https://travis-ci.org/sindresorhus/eslint-plugin-ava) [![Coverage Status](https://coveralls.io/repos/github/sindresorhus/eslint-plugin-ava/badge.svg?branch=master)](https://coveralls.io/github/sindresorhus/eslint-plugin-ava?branch=master)
+# eslint-plugin-tape
 
-> ESLint rules for [AVA](https://ava.li)
+> ESLint rules for [tape](https://github.com/substack/tape)
 
-Translations: [Français](https://github.com/sindresorhus/ava-docs/blob/master/fr_FR/related/eslint-plugin-ava/readme.md)
-
+This ESLint plugin is a copy of the great [eslint-plugin-ava](https://github.com/sindresorhus/eslint-plugin-ava) but for tape.
 
 ## Install
 
 ```
-$ npm install --save-dev eslint eslint-plugin-ava
+$ npm install --save-dev eslint eslint-plugin-tape
 ```
 
 
@@ -28,28 +27,23 @@ Configure it in `package.json`.
 			"sourceType": "module"
 		},
 		"plugins": [
-			"ava"
+			"tape"
 		],
 		"rules": {
-			"ava/assertion-message": ["off", "always"],
-			"ava/max-asserts": ["off", 5],
-			"ava/no-cb-test": "off",
-			"ava/no-identical-title": "error",
-			"ava/no-ignored-test-files": "error",
-			"ava/no-invalid-end": "error",
-			"ava/no-only-test": "error",
-			"ava/no-skip-assert": "error",
-			"ava/no-skip-test": "error",
-			"ava/no-statement-after-end": "error",
-			"ava/no-todo-test": "warn",
-			"ava/no-unknown-modifiers": "error",
-			"ava/prefer-power-assert": "off",
-			"ava/test-ended": "error",
-			"ava/test-title": ["error", "if-multiple"],
-			"ava/use-t-well": "error",
-			"ava/use-t": "error",
-			"ava/use-test": "error",
-			"ava/use-true-false": "error"
+			"tape/assertion-message": ["off", "always"],
+			"tape/max-asserts": ["off", 5],
+			"tape/no-identical-title": "error",
+			"tape/no-ignored-test-files": "error",
+			"tape/no-only-test": "error",
+			"tape/no-skip-assert": "error",
+			"tape/no-skip-test": "error",
+			"tape/no-statement-after-end": "error",
+			"tape/no-unknown-modifiers": "error",
+			"tape/test-ended": "error",
+			"tape/test-title": ["error", "if-multiple"],
+			"tape/use-t-well": "error",
+			"tape/use-t": "error",
+			"tape/use-test": "error",
 		}
 	}
 }
@@ -62,23 +56,18 @@ The rules will only activate in test files.
 
 - [assertion-message](docs/rules/assertion-message.md) - Enforce or disallow assertion messages.
 - [max-asserts](docs/rules/max-asserts.md) - Limit the number of assertions in a test.
-- [no-cb-test](docs/rules/no-cb-test.md) - Ensure no `test.cb()` is used.
 - [no-identical-title](docs/rules/no-identical-title.md) - Ensure no tests have the same title.
 - [no-ignored-test-files](docs/rules/no-ignored-test-files.md) - Ensure no tests are written in ignored files.
-- [no-invalid-end](docs/rules/no-invalid-end.md) - Ensure `t.end()` is only called inside `test.cb()`.
 - [no-only-test](docs/rules/no-only-test.md) - Ensure no `test.only()` are present.
 - [no-skip-assert](docs/rules/no-skip-assert.md) - Ensure no assertions are skipped.
 - [no-skip-test](docs/rules/no-skip-test.md) - Ensure no tests are skipped.
 - [no-statement-after-end](docs/rules/no-statement-after-end.md) - Ensure `t.end()` is the last statement executed.
-- [no-todo-test](docs/rules/no-todo-test.md) - Ensure no `test.todo()` is used.
 - [no-unknown-modifiers](docs/rules/no-unknown-modifiers.md) - Prevent the use of unknown test modifiers.
-- [prefer-power-assert](docs/rules/prefer-power-assert.md) - Allow only use of the asserts that have no [power-assert](https://github.com/power-assert-js/power-assert) alternative.
 - [test-ended](docs/rules/test-ended.md) - Ensure callback tests are explicitly ended.
 - [test-title](docs/rules/test-title.md) - Ensure tests have a title.
 - [use-t-well](docs/rules/use-t-well.md) - Prevent the incorrect use of `t`.
 - [use-t](docs/rules/use-t.md) - Ensure test functions use `t` as their parameter.
 - [use-test](docs/rules/use-test.md) - Ensure that AVA is imported with `test` as the variable name.
-- [use-true-false](docs/rules/use-true-false.md) - Ensure that `t.true()`/`t.false()` are used instead of `t.truthy()`/`t.falsy()`.
 
 
 ## Recommended config
@@ -92,9 +81,9 @@ Enable it in your `package.json` with the `extends` option:
 	"name": "my-awesome-project",
 	"eslintConfig": {
 		"plugins": [
-			"ava"
+			"tape"
 		],
-		"extends": "plugin:ava/recommended"
+		"extends": "plugin:tape/recommended"
 	}
 }
 ```
@@ -106,13 +95,4 @@ See the [ESLint docs](http://eslint.org/docs/user-guide/configuring#extending-co
 
 ## Credit
 
-- [AVA team](https://github.com/sindresorhus/ava#team)
-- [Jeroen Engels](https://github.com/jfmengels)
-- [Takuto Wada](https://github.com/twada)
-
-[And our awesome contributors](https://github.com/sindresorhus/eslint-plugin-ava/graphs/contributors)
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)
+- [Sindre Sorhus](https://sindresorhus.com) & [AVA team](https://github.com/sindresorhus/ava#team) for the fantastic work with [eslint-plugin-ava](https://github.com/sindresorhus/eslint-plugin-ava)

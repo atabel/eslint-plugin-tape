@@ -9,7 +9,7 @@ const ruleTester = new RuleTester({
 });
 
 const ruleError = {ruleId: 'use-t-well'};
-const header = `const test = require('ava');\n`;
+const header = `const test = require('tape');\n`;
 
 function testCase(contents, prependHeader) {
 	const content = `test(t => { ${contents} });`;
@@ -29,8 +29,8 @@ test(() => {
 			testCase('t.end();'),
 			testCase('t.pass();'),
 			testCase('t.fail();'),
-			testCase('t.truthy(v);'),
-			testCase('t.falsy(v);'),
+			testCase('t.ok(v);'),
+			testCase('t.notOk(v);'),
 			testCase('t.true(v);'),
 			testCase('t.false(v);'),
 			testCase('t.is(v);'),
@@ -38,13 +38,9 @@ test(() => {
 			testCase('t.deepEqual(v, v);'),
 			testCase('t.notDeepEqual(v, v);'),
 			testCase('t.throws(fn);'),
-			testCase('t.notThrows(fn);'),
-			testCase('t.regex(v, /v/);'),
-			testCase('t.ifError(error);'),
+			testCase('t.doesNotThrow(fn);'),
 			testCase('t.deepEqual.skip(a, a);'),
 			testCase('t.skip.deepEqual(a, a);'),
-			testCase('t.context.a = 1;'),
-			testCase('t.context.foo.skip();'),
 			testCase('setImmediate(t.end);'),
 			testCase('t.deepEqual;'),
 			testCase('t.plan(1);'),
@@ -93,19 +89,19 @@ test(() => {
 			{
 				code: testCase('t.a = 1;'),
 				errors: [
-					{...ruleError, message: 'Unknown member `a`. Use `context.a` instead.'}
+					{...ruleError, message: 'Unknown member `a`.'}
 				]
 			},
 			{
 				code: testCase('t.ctx.a = 1;'),
 				errors: [
-					{...ruleError, message: 'Unknown member `ctx`. Use `context.ctx` instead.'}
+					{...ruleError, message: 'Unknown member `ctx`.'}
 				]
 			},
 			{
 				code: testCase('t.deepEqu;'),
 				errors: [
-					{...ruleError, message: 'Unknown member `deepEqu`. Use `context.deepEqu` instead.'}
+					{...ruleError, message: 'Unknown member `deepEqu`.'}
 				]
 			},
 			{

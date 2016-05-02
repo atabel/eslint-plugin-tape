@@ -1,14 +1,14 @@
 'use strict';
 var util = require('../util');
-var createAvaRule = require('../create-ava-rule');
+var createTapeRule = require('../create-tape-rule');
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTapeRule();
 
-	return ava.merge({
+	return tape.merge({
 		MemberExpression: function (node) {
-			if (ava.isTestFile &&
-					ava.currentTestNode &&
+			if (tape.isTestFile &&
+					tape.currentTestNode &&
 					node.property.name === 'skip' &&
 					util.nameOfRootObject(node) === 't') {
 				context.report({

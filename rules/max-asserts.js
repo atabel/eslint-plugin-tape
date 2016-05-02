@@ -1,18 +1,18 @@
 'use strict';
 var util = require('../util');
-var createAvaRule = require('../create-ava-rule');
+var createTapeRule = require('../create-tape-rule');
 
 var notAssertionMethods = ['plan', 'end'];
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTapeRule();
 	var maxAssertions = context.options[0] || 5;
 	var assertionCount = 0;
 	var nodeToReport = null;
 
-	return ava.merge({
+	return tape.merge({
 		'CallExpression': function (node) {
-			if (!ava.isTestFile || !ava.currentTestNode || node.callee.type !== 'MemberExpression') {
+			if (!tape.isTestFile || !tape.currentTestNode || node.callee.type !== 'MemberExpression') {
 				return;
 			}
 
@@ -29,7 +29,7 @@ module.exports = function (context) {
 			}
 		},
 		'CallExpression:exit': function (node) {
-			if (ava.currentTestNode === node) {
+			if (tape.currentTestNode === node) {
 				// leaving test function
 				if (assertionCount > maxAssertions) {
 					context.report({

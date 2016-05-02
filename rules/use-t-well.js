@@ -1,25 +1,12 @@
 'use strict';
 var util = require('../util');
-var createAvaRule = require('../create-ava-rule');
+var createTapeRule = require('../create-tape-rule');
+var tapeAssertionMethods = require('../tape-assertion-methods');
 
 var methods = [
 	'end',
-	'pass',
-	'fail',
-	'truthy',
-	'falsy',
-	'true',
-	'false',
-	'is',
-	'not',
-	'deepEqual',
-	'notDeepEqual',
-	'throws',
-	'notThrows',
-	'regex',
-	'ifError',
 	'plan'
-];
+].concat(Object.keys(tapeAssertionMethods));
 
 function isMethod(name) {
 	return methods.indexOf(name) !== -1;
@@ -61,12 +48,12 @@ function getMemberStats(members) {
 }
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTapeRule();
 
-	return ava.merge({
+	return tape.merge({
 		CallExpression: function (node) {
-			if (ava.isTestFile &&
-					ava.currentTestNode &&
+			if (tape.isTestFile &&
+					tape.currentTestNode &&
 					node.callee.type !== 'MemberExpression' &&
 					node.callee.name === 't') {
 				context.report({
@@ -76,8 +63,8 @@ module.exports = function (context) {
 			}
 		},
 		MemberExpression: function (node) {
-			if (!ava.isTestFile ||
-					!ava.currentTestNode ||
+			if (!tape.isTestFile ||
+					!tape.currentTestNode ||
 					node.parent.type === 'MemberExpression' ||
 					util.nameOfRootObject(node) !== 't') {
 				return;
@@ -85,19 +72,6 @@ module.exports = function (context) {
 
 			var members = getMembers(node);
 			var stats = getMemberStats(members);
-
-			if (members[0] === 'context') {
-				// anything is fine when of the form `t.context...`
-				if (members.length === 1 && isCallExpression(node)) {
-					// except `t.context()`
-					context.report({
-						node: node,
-						message: 'Unknown assertion method `context`.'
-					});
-				}
-
-				return;
-			}
 
 			if (isCallExpression(node)) {
 				if (stats.other.length > 0) {
@@ -124,7 +98,7 @@ module.exports = function (context) {
 			} else if (stats.other.length > 0) {
 				context.report({
 					node: node,
-					message: 'Unknown member `' + stats.other[0] + '`. Use `context.' + stats.other[0] + '` instead.'
+					message: 'Unknown member `' + stats.other[0] + '`.'
 				});
 			}
 		}

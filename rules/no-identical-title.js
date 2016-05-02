@@ -1,7 +1,7 @@
 'use strict';
 var espurify = require('espurify');
 var deepStrictEqual = require('deep-strict-equal');
-var createAvaRule = require('../create-ava-rule');
+var createTapeRule = require('../create-tape-rule');
 
 function purify(node) {
 	return node && espurify(node);
@@ -27,17 +27,17 @@ function isTitleUsed(usedTitleNodes, titleNode) {
 }
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTapeRule();
 	var usedTitleNodes = [];
 
-	return ava.merge({
+	return tape.merge({
 		'CallExpression': function (node) {
-			if (!ava.isTestFile || ava.currentTestNode !== node || ava.hasHookModifier()) {
+			if (!tape.isTestFile || tape.currentTestNode !== node || tape.hasHookModifier()) {
 				return;
 			}
 
 			var args = node.arguments;
-			var titleNode = args.length > 1 || ava.hasTestModifier('todo') ? args[0] : undefined;
+			var titleNode = args.length > 1 || tape.hasTestModifier('todo') ? args[0] : undefined;
 
 			if (!isStatic(titleNode)) {
 				return;

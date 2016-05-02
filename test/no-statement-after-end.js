@@ -9,10 +9,10 @@ const ruleTester = new RuleTester({
 });
 
 const errors = [{ruleId: 'no-statement-after-end'}];
-const header = `const test = require('ava');\n`;
+const header = `const test = require('tape');\n`;
 
-function cbTest(contents, prependHeader) {
-	var ret = `test.cb(t => { ${contents} });`;
+function makeTest(contents, prependHeader) {
+	var ret = `test(t => { ${contents} });`;
 
 	if (prependHeader !== false) {
 		ret = header + ret;
@@ -24,30 +24,30 @@ function cbTest(contents, prependHeader) {
 test(() => {
 	ruleTester.run('no-statement-after-end', rule, {
 		valid: [
-			cbTest('t.end();'),
-			cbTest('t.is(1, 1); t.end();'),
-			cbTest('notT.end(); t.is(1, 1);'),
-			cbTest('if (t.context.a === 1) { return t.end(); } \n t.is(1, 1); t.end();'),
-			cbTest('return t.end();'),
-			cbTest('t.end(); return;'),
+			makeTest('t.end();'),
+			makeTest('t.is(1, 1); t.end();'),
+			makeTest('notT.end(); t.is(1, 1);'),
+			makeTest('if (t.context.a === 1) { return t.end(); } \n t.is(1, 1); t.end();'),
+			makeTest('return t.end();'),
+			makeTest('t.end(); return;'),
 			// valid because it is not a test file (no header)
-			cbTest('t.end(); t.is(1, 1);', false)
+			makeTest('t.end(); t.is(1, 1);', false)
 		],
 		invalid: [
 			{
-				code: cbTest('t.end(); t.is(1, 1);'),
+				code: makeTest('t.end(); t.is(1, 1);'),
 				errors
 			},
 			{
-				code: cbTest('t.end(); return 3 + 4;'),
+				code: makeTest('t.end(); return 3 + 4;'),
 				errors
 			},
 			{
-				code: cbTest('t.end(); console.log("end");'),
+				code: makeTest('t.end(); console.log("end");'),
 				errors
 			},
 			{
-				code: cbTest('if (t.context.a === 1) { t.end(); }\nt.is(1, 1); t.end();'),
+				code: makeTest('if (t.context.a === 1) { t.end(); }\nt.is(1, 1); t.end();'),
 				errors
 			}
 		]

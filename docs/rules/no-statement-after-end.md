@@ -1,20 +1,18 @@
 # Ensure `t.end()` is the last statement executed.
 
-Translations: [Français](https://github.com/sindresorhus/ava-docs/blob/master/fr_FR/related/eslint-plugin-ava/docs/rules/no-statement-after-end.md)
-
 `t.end()` should mark the end of your test, and additional statements should not be executed.
 
 ## Fail
 
 ```js
-import test from 'ava';
+import test from 'tape';
 
-test.cb(t => {
+test(t => {
 	t.end();
 	t.is(1, 1);
 });
 
-test.cb(t => {
+test(t => {
 	t.end();
 	console.log('at the end');
 });
@@ -24,15 +22,15 @@ test.cb(t => {
 ## Pass
 
 ```js
-import test from 'ava';
+import test from 'tape';
 
-test.cb(t => {
+test(t => {
 	t.is(1, 1);
 	t.end();
 });
-import test from 'ava';
+import test from 'tape';
 
-test.cb(t => {
+test(t => {
 	if (a) {
 		// Allowed because no further statements are reachable.
 		return t.end();

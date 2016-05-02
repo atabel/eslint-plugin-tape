@@ -9,7 +9,7 @@ const ruleTester = new RuleTester({
 });
 
 const errors = [{ruleId: 'no-skip-assert'}];
-const header = `const test = require('ava');\n`;
+const header = `const test = require('tape');\n`;
 
 test(() => {
 	ruleTester.run('no-skip-assert', rule, {
@@ -23,10 +23,6 @@ test(() => {
 		invalid: [
 			{
 				code: header + 'test(t => { t.skip.is(1, 1); });',
-				errors
-			},
-			{
-				code: header + 'test.cb(t => { t.skip.is(1, 1); t.end(); });',
 				errors
 			},
 			{

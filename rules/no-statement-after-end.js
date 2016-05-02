@@ -1,5 +1,5 @@
 'use strict';
-var createAvaRule = require('../create-ava-rule');
+var createTapeRule = require('../create-tape-rule');
 
 // This rule makes heavy use of eslints code path analysis
 // See: http://eslint.org/docs/developer-guide/code-path-analysis.html
@@ -17,7 +17,7 @@ function isEndExpression(node) {
 }
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTapeRule();
 	var segmentInfoMap = Object.create(null);
 	var segmentInfoStack = [];
 	var currentSegmentInfo = null;
@@ -51,7 +51,7 @@ module.exports = function (context) {
 	}
 
 	function checkStatement(node) {
-		if (!ava.isTestFile) {
+		if (!tape.isTestFile) {
 			return;
 		}
 
@@ -71,7 +71,7 @@ module.exports = function (context) {
 		}
 	}
 
-	return ava.merge({
+	return tape.merge({
 		ExpressionStatement: checkStatement,
 		WithStatement: checkStatement,
 		IfStatement: checkStatement,

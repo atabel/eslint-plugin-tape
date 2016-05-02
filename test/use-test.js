@@ -16,34 +16,34 @@ const errors = [{ruleId: 'use-test'}];
 test(() => {
 	ruleTester.run('use-test', rule, {
 		valid: [
-			`var test = require('ava');`,
-			`let test = require('ava');`,
-			`const test = require('ava');`,
-			`const a = 1, test = require('ava'), b = 2;`,
+			`var test = require('tape');`,
+			`let test = require('tape');`,
+			`const test = require('tape');`,
+			`const a = 1, test = require('tape'), b = 2;`,
 			`const test = require('foo');`,
-			`import test from 'ava';`,
-			`import test, {} from 'ava';`,
+			`import test from 'tape';`,
+			`import test, {} from 'tape';`,
 			`import test from 'foo';`
 		],
 		invalid: [
 			{
-				code: `var ava = require('ava');`,
+				code: `var tape = require('tape');`,
 				errors
 			},
 			{
-				code: `let ava = require('ava');`,
+				code: `let tape = require('tape');`,
 				errors
 			},
 			{
-				code: `const ava = require('ava');`,
+				code: `const tape = require('tape');`,
 				errors
 			},
 			{
-				code: `const a = 1, ava = require('ava'), b = 2;`,
+				code: `const a = 1, tape = require('tape'), b = 2;`,
 				errors
 			},
 			{
-				code: `import ava from 'ava';`,
+				code: `import tape from 'tape';`,
 				errors
 			}
 		]

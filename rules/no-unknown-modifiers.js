@@ -1,16 +1,9 @@
 'use strict';
-var createAvaRule = require('../create-ava-rule');
+var createTapeRule = require('../create-tape-rule');
 
 var modifiers = [
-	'after',
-	'afterEach',
-	'before',
-	'beforeEach',
-	'cb',
 	'only',
-	'serial',
-	'skip',
-	'todo'
+	'skip'
 ];
 
 function getTestModifiers(node) {
@@ -33,11 +26,11 @@ function unknownModifiers(node) {
 }
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTapeRule();
 
-	return ava.merge({
+	return tape.merge({
 		CallExpression: function (node) {
-			if (!ava.isTestFile || ava.currentTestNode !== node) {
+			if (!tape.isTestFile || tape.currentTestNode !== node) {
 				return;
 			}
 

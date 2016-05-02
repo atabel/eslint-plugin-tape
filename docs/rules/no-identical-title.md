@@ -1,14 +1,12 @@
 # Ensure no tests have the same title
 
-Translations: [Français](https://github.com/sindresorhus/ava-docs/blob/master/fr_FR/related/eslint-plugin-ava/docs/rules/no-identical-title.md)
-
 Disallow tests with identical titles as it makes it hard to differentiate them.
 
 
 ## Fail
 
 ```js
-import test from 'ava';
+import test from 'tape';
 
 test('foo', t => {
 	t.pass();
@@ -23,7 +21,7 @@ test('foo', t => {
 ## Pass
 
 ```js
-import test from 'ava';
+import test from 'tape';
 
 test(t => {
 	t.pass();

@@ -1,21 +1,19 @@
 # Enforce or disallow assertion messages
 
-Translations: [Français](https://github.com/sindresorhus/ava-docs/blob/master/fr_FR/related/eslint-plugin-ava/docs/rules/assertion-message.md)
-
 Assertion messages are optional arguments that can be given to any assertion call to improve the error message, should the assertion fail. This rule either enforces or disallows the use of those messages.
 
 
 ## Fail
 
 ```js
-import test from 'ava';
+import test from 'tape';
 
-/* eslint ava/assertion-message: ["error", "always"] */
+/* eslint tape/assertion-message: ["error", "always"] */
 test(t => {
 	t.true(array.indexOf(value) !== -1);
 });
 
-/* eslint ava/assertion-message: ["error", "never"] */
+/* eslint tape/assertion-message: ["error", "never"] */
 test(t => {
 	t.true(array.indexOf(value) !== -1, 'value is not in array');
 });
@@ -25,14 +23,14 @@ test(t => {
 ## Pass
 
 ```js
-import test from 'ava';
+import test from 'tape';
 
-/* eslint ava/assertion-message: ["error", "always"] */
+/* eslint tape/assertion-message: ["error", "always"] */
 test(t => {
 	t.true(array.indexOf(value) !== -1, 'value is not in array');
 });
 
-/* eslint ava/assertion-message: ["error", "never"] */
+/* eslint tape/assertion-message: ["error", "never"] */
 test(t => {
 	t.true(array.indexOf(value) !== -1);
 });
@@ -45,5 +43,5 @@ The rule takes one option, a string, which could be either `"always"` or `"never
 You can set the option in configuration like this:
 
 ```js
-"ava/assertion-message": ["error", "always"]
+"tape/assertion-message": ["error", "always"]
 ```

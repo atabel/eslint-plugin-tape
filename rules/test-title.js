@@ -1,21 +1,20 @@
 'use strict';
-var createAvaRule = require('../create-ava-rule');
+var createTapeRule = require('../create-tape-rule');
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTapeRule();
 	var ifMultiple = context.options[0] !== 'always';
 	var testCount = 0;
 
-	return ava.merge({
+	return tape.merge({
 		'CallExpression': function (node) {
-			if (!ava.isTestFile || ava.currentTestNode !== node || ava.hasHookModifier()) {
+			if (!tape.isTestFile || tape.currentTestNode !== node || tape.hasHookModifier()) {
 				return;
 			}
 
 			testCount++;
 
-			var requiredLength = ava.hasTestModifier('todo') ? 1 : 2;
-			var hasNoTitle = node.arguments.length !== requiredLength;
+			var hasNoTitle = node.arguments.length !== 2;
 			var isOverThreshold = !ifMultiple || testCount > 1;
 
 			if (hasNoTitle && isOverThreshold) {

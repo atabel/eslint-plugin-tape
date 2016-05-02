@@ -2,8 +2,7 @@
 var path = require('path');
 var pkgUp = require('pkg-up');
 var multimatch = require('multimatch');
-var util = require('../util');
-var createAvaRule = require('../create-ava-rule');
+var createTestRule = require('../create-tape-rule');
 
 var defaultFiles = [
 	'test.js',
@@ -37,15 +36,15 @@ function getPackageInfo() {
 
 	return {
 		rootDir: packageFilePath && path.dirname(packageFilePath),
-		files: util.getAvaConfig(packageFilePath).files
+		files: defaultFiles
 	};
 }
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTestRule();
 	var packageInfo = getPackageInfo();
 	var options = context.options[0] || {};
-	var files = options.files || packageInfo.files || defaultFiles;
+	var files = options.files || packageInfo.files;
 	var hasTestCall = false;
 
 	if (!packageInfo.rootDir) {
@@ -53,9 +52,9 @@ module.exports = function (context) {
 		return {};
 	}
 
-	return ava.merge({
+	return tape.merge({
 		'CallExpression': function (node) {
-			if (ava.isTestFile && ava.currentTestNode === node) {
+			if (tape.isTestFile && tape.currentTestNode === node) {
 				hasTestCall = true;
 			}
 		},

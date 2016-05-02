@@ -1,7 +1,6 @@
 import path from 'path';
 import test from 'ava';
 import {RuleTester} from 'eslint';
-import util from '../util';
 import rule from '../rules/no-ignored-test-files';
 
 const ruleTester = new RuleTester({
@@ -10,7 +9,7 @@ const ruleTester = new RuleTester({
 	}
 });
 
-const header = `const test = require('ava');\n`;
+const header = `const test = require('tape');\n`;
 const rootDir = path.dirname(process.cwd());
 
 function toPath(subPath) {
@@ -21,7 +20,7 @@ function code(hasHeader) {
 	return (hasHeader ? header : '') + 'test(t => { t.pass(); });';
 }
 
-test('without AVA config in package.json', () => {
+test('With default config', () => {
 	ruleTester.run('no-ignored-test-files', rule, {
 		valid: [
 			{
@@ -100,58 +99,4 @@ test('without AVA config in package.json', () => {
 			}
 		]
 	});
-});
-
-test('with AVA config in package.json', () => {
-	const oldGetAvaConfig = util.getAvaConfig;
-
-	util.getAvaConfig = function mockGetAvaConfig() {
-		return {
-			files: ['lib/**/*.test.js']
-		};
-	};
-
-	ruleTester.run('no-ignored-test-files', rule, {
-		valid: [
-			{
-				code: code(true),
-				filename: toPath('lib/foo.test.js')
-			},
-			{
-				code: code(true),
-				filename: toPath('bar/foo.test.js'),
-				options: [{files: ['bar/**/*.test.js']}]
-			}
-		],
-		invalid: [
-			{
-				code: code(true),
-				filename: toPath('lib/foo/fixtures/bar.test.js'),
-				errors: [{message: 'Test file is ignored because it is in `**/fixtures/** **/helpers/**`.'}]
-			},
-			{
-				code: code(true),
-				filename: toPath('lib/foo/helpers/bar.test.js'),
-				errors: [{message: 'Test file is ignored because it is in `**/fixtures/** **/helpers/**`.'}]
-			},
-			{
-				code: code(true),
-				filename: toPath('test.js'),
-				errors: [{message: 'Test file is ignored because it is not in `lib/**/*.test.js`.'}]
-			},
-			{
-				code: code(true),
-				filename: toPath('bar/foo.test.js'),
-				errors: [{message: 'Test file is ignored because it is not in `lib/**/*.test.js`.'}]
-			},
-			{
-				code: code(true),
-				filename: toPath('lib/foo.test.js'),
-				options: [{files: ['bar/**/*.test.js']}],
-				errors: [{message: 'Test file is ignored because it is not in `bar/**/*.test.js`.'}]
-			}
-		]
-	});
-
-	util.getAvaConfig = oldGetAvaConfig;
 });

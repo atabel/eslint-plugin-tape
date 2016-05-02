@@ -1,29 +1,13 @@
 'use strict';
 var util = require('../util');
-var createAvaRule = require('../create-ava-rule');
-
-var expectedNbArguments = {
-	deepEqual: 2,
-	fail: 0,
-	false: 1,
-	falsy: 1,
-	ifError: 1,
-	is: 2,
-	not: 2,
-	notDeepEqual: 2,
-	notThrows: 1,
-	pass: 0,
-	regex: 2,
-	throws: 1,
-	true: 1,
-	truthy: 1
-};
+var createTapeRule = require('../create-tape-rule');
+var tapeAssertionMethods = require('../tape-assertion-methods');
 
 function nbArguments(node) {
-	var nArgs = expectedNbArguments[node.property.name];
+	var method = tapeAssertionMethods[node.property.name];
 
-	if (nArgs !== undefined) {
-		return nArgs;
+	if (method !== undefined) {
+		return method.arguments;
 	}
 
 	if (node.object.type === 'MemberExpression') {
@@ -34,12 +18,12 @@ function nbArguments(node) {
 }
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTapeRule();
 	var shouldHaveMessage = context.options[0] !== 'never';
 
-	return ava.merge({
+	return tape.merge({
 		CallExpression: function (node) {
-			if (!ava.isTestFile || !ava.currentTestNode || node.callee.type !== 'MemberExpression') {
+			if (!tape.isTestFile || !tape.currentTestNode || node.callee.type !== 'MemberExpression') {
 				return;
 			}
 

@@ -9,13 +9,12 @@ const ruleTester = new RuleTester({
 });
 
 const errors = [{ruleId: 'no-skip-test'}];
-const header = `const test = require('ava');\n`;
+const header = `const test = require('tape');\n`;
 
 test(() => {
 	ruleTester.run('no-skip-test', rule, {
 		valid: [
 			header + 'test("my test name", t => { t.pass(); });',
-			header + 'test.cb("my test name", t => { t.pass(); t.end(); });',
 			header + 'test(t => { t.pass(); }); test(t => { t.pass(); });',
 			header + 'test(t => { t.skip.is(1, 2); });',
 			header + 'notTest.skip();',
@@ -25,14 +24,6 @@ test(() => {
 		invalid: [
 			{
 				code: header + 'test.skip(t => { t.pass(); });',
-				errors
-			},
-			{
-				code: header + 'test.cb.skip(t => { t.pass(); t.end(); });',
-				errors
-			},
-			{
-				code: header + 'test.skip.cb(t => { t.pass(); t.end(); });',
 				errors
 			}
 		]

@@ -1,15 +1,13 @@
 # Ensure tests have a title
 
-Translations: [Français](https://github.com/sindresorhus/ava-docs/blob/master/fr_FR/related/eslint-plugin-ava/docs/rules/test-title.md)
-
 Tests should have a title.
 
 
 ## Fail
 
 ```js
-/*eslint ava/test-title: ["error", "if-multiple"]*/
-import test from 'ava';
+/*eslint tape/test-title: ["error", "if-multiple"]*/
+import test from 'tape';
 
 test(t => {
 	t.pass();
@@ -19,8 +17,8 @@ test(t => {
 	t.pass();
 });
 
-/*eslint ava/test-title: ["error", "always"]*/
-import test from 'ava';
+/*eslint tape/test-title: ["error", "always"]*/
+import test from 'tape';
 
 test(t => {
 	t.pass();
@@ -31,8 +29,8 @@ test(t => {
 ## Pass
 
 ```js
-/*eslint ava/test-title: ["error", "if-multiple"]*/
-import test from 'ava';
+/*eslint tape/test-title: ["error", "if-multiple"]*/
+import test from 'tape';
 
 test(t => {
 	t.pass();
@@ -42,8 +40,8 @@ test('foo', t => {
 	t.pass();
 });
 
-/*eslint ava/test-title: ["error", "always"]*/
-import test from 'ava';
+/*eslint tape/test-title: ["error", "always"]*/
+import test from 'tape';
 
 test('foo', t => {
 	t.pass();
@@ -57,5 +55,5 @@ The rule takes one option, a string, which could be either `"always"` or `"if-mu
 You can set the option in configuration like this:
 
 ```js
-"ava/test-title": ["error", "always"]
+"tape/test-title": ["error", "always"]
 ```

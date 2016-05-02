@@ -1,12 +1,12 @@
 'use strict';
-var createAvaRule = require('../create-ava-rule');
+var createTapeRule = require('../create-tape-rule');
 
 module.exports = function (context) {
-	var ava = createAvaRule();
+	var tape = createTapeRule();
 
-	return ava.merge({
+	return tape.merge({
 		CallExpression: function (node) {
-			if (ava.isTestFile && ava.currentTestNode === node && ava.hasTestModifier('skip')) {
+			if (tape.isTestFile && tape.currentTestNode === node && tape.hasTestModifier('skip')) {
 				context.report({
 					node: node,
 					message: 'No tests should be skipped.'
