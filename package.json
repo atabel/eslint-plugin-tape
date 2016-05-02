@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": "atabel/eslint-plugin-tape",
   "author": {
-    "email": "atabel87@gmail.com",
+    "email": "atabel87@gmail.com"
   },
   "engines": {
     "node": ">=0.10.0"

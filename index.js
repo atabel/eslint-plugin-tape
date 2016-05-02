@@ -15,7 +15,7 @@ module.exports = {
 		'test-title': require('./rules/test-title'),
 		'use-t-well': require('./rules/use-t-well'),
 		'use-t': require('./rules/use-t'),
-		'use-test': require('./rules/use-test'),
+		'use-test': require('./rules/use-test')
 	},
 	configs: {
 		recommended: {
@@ -40,7 +40,7 @@ module.exports = {
 				'tape/test-title': ['error', 'if-multiple'],
 				'tape/use-t-well': 'error',
 				'tape/use-t': 'error',
-				'tape/use-test': 'error',
+				'tape/use-test': 'error'
 			}
 		}
 	}

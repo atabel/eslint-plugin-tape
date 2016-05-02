@@ -29,61 +29,36 @@ test('With default config', () => {
 			},
 			{
 				code: code(true),
-				filename: toPath('test/foo/not-fixtures/bar.js')
-			},
-			{
-				code: code(true),
-				filename: toPath('test/foo/not-helpers/bar.js')
+				filename: toPath('src/foo/__tests__/bar.js')
 			},
 			{
 				code: header + 'foo(t => {});',
-				filename: toPath('test/foo/fixtures/bar.js')
-			},
-			{
-				code: header + 'foo(t => {});',
-				filename: toPath('test/foo/helpers/bar.js')
+				filename: toPath('test/foo/fixtures/bar.js'),
+				options: [{excludedFiles: ['**/fixtures/**']}]
 			},
 			{
 				code: code(false),
-				filename: toPath('test/foo/fixtures/bar.js')
-			},
-			{
-				code: code(false),
-				filename: toPath('test/foo/helpers/bar.js')
-			},
-			{
-				code: code(true),
-				filename: toPath('test.js')
-			},
-			{
-				code: code(true),
-				filename: toPath('test-foo.js')
-			},
-			{
-				code: code(true),
-				filename: toPath('lib/foo.test.js')
-			},
-			{
-				code: code(true),
-				filename: toPath('lib/foo.spec.js'),
-				options: [{files: ['lib/**/*.spec.js']}]
+				filename: toPath('test/foo/fixtures/bar.js'),
+				options: [{excludedFiles: ['**/fixtures/**']}]
 			}
 		],
 		invalid: [
 			{
 				code: code(true),
 				filename: toPath('test/foo/fixtures/bar.js'),
-				errors: [{message: 'Test file is ignored because it is in `**/fixtures/** **/helpers/**`.'}]
+				errors: [{message: 'Test file is ignored because it is in `**/fixtures/** **/helpers/**`.'}],
+				options: [{excludedFiles: ['**/fixtures/**', '**/helpers/**']}]
 			},
 			{
 				code: code(true),
 				filename: toPath('test/foo/helpers/bar.js'),
-				errors: [{message: 'Test file is ignored because it is in `**/fixtures/** **/helpers/**`.'}]
+				errors: [{message: 'Test file is ignored because it is in `**/fixtures/** **/helpers/**`.'}],
+				options: [{excludedFiles: ['**/fixtures/**', '**/helpers/**']}]
 			},
 			{
 				code: code(true),
 				filename: toPath('lib/foo.spec.js'),
-				errors: [{message: 'Test file is ignored because it is not in `test.js test-*.js test/**/*.js **/__tests__/**/*.js **/*.test.js`.'}]
+				errors: [{message: 'Test file is ignored because it is not in `test/**/*.js **/__tests__/**/*.js`.'}]
 			},
 			{
 				code: code(true),

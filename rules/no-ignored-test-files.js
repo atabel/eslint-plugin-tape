@@ -5,23 +5,17 @@ var multimatch = require('multimatch');
 var createTestRule = require('../create-tape-rule');
 
 var defaultFiles = [
-	'test.js',
-	'test-*.js',
 	'test/**/*.js',
-	'**/__tests__/**/*.js',
-	'**/*.test.js'
+	'**/__tests__/**/*.js'
 ];
 
-var excludedFolders = [
-	'**/fixtures/**',
-	'**/helpers/**'
-];
+var defaultExcludedFiles = [];
 
-function isIgnored(rootDir, files, filepath) {
+function isIgnored(rootDir, files, excludedFiles, filepath) {
 	var relativeFilePath = path.relative(rootDir, filepath);
 
-	if (multimatch([relativeFilePath], excludedFolders).length !== 0) {
-		return 'Test file is ignored because it is in `' + excludedFolders.join(' ') + '`.';
+	if (multimatch([relativeFilePath], excludedFiles).length !== 0) {
+		return 'Test file is ignored because it is in `' + excludedFiles.join(' ') + '`.';
 	}
 
 	if (multimatch([relativeFilePath], files).length === 0) {
@@ -31,23 +25,21 @@ function isIgnored(rootDir, files, filepath) {
 	return null;
 }
 
-function getPackageInfo() {
+function getRootDir() {
 	var packageFilePath = pkgUp.sync();
 
-	return {
-		rootDir: packageFilePath && path.dirname(packageFilePath),
-		files: defaultFiles
-	};
+	return packageFilePath && path.dirname(packageFilePath);
 }
 
 module.exports = function (context) {
 	var tape = createTestRule();
-	var packageInfo = getPackageInfo();
+	var rootDir = getRootDir();
 	var options = context.options[0] || {};
-	var files = options.files || packageInfo.files;
+	var files = options.files || defaultFiles;
+	var excludedFiles = options.excludedFiles || defaultExcludedFiles;
 	var hasTestCall = false;
 
-	if (!packageInfo.rootDir) {
+	if (!rootDir) {
 		// Could not find a package.json folder
 		return {};
 	}
@@ -63,7 +55,7 @@ module.exports = function (context) {
 				return;
 			}
 
-			var ignoredReason = isIgnored(packageInfo.rootDir, files, context.getFilename());
+			var ignoredReason = isIgnored(rootDir, files, excludedFiles, context.getFilename());
 
 			if (ignoredReason) {
 				context.report({
