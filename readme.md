@@ -2,7 +2,7 @@
 
 > ESLint rules for [tape](https://github.com/substack/tape)
 
-This ESLint plugin is a copy of the great [eslint-plugin-ava](https://github.com/sindresorhus/eslint-plugin-ava) but for tape.
+This ESLint plugin is a copy of the great [eslint-plugin-ava](https://github.com/sindresorhus/eslint-plugin-ava) adapting the rules to work for tape tests and removing AVA specific rules.
 
 ## Install
 
