@@ -1,4 +1,4 @@
-# eslint-plugin-tape [![Build Status](https://travis-ci.org/atabel/eslint-plugin-tape.svg?branch=master)](https://travis-ci.org/atabel/eslint-plugin-tape)
+# eslint-plugin-tape [![Build Status](https://travis-ci.org/atabel/eslint-plugin-tape.svg?branch=master)](https://travis-ci.org/atabel/eslint-plugin-tape) [![Build Status](https://travis-ci.org/atabel/eslint-plugin-tape.svg?branch=master)](https://travis-ci.org/atabel/eslint-plugin-tape)
 
 > ESLint rules for [tape](https://github.com/substack/tape)
 
