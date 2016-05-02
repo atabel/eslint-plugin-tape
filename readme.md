@@ -67,7 +67,7 @@ The rules will only activate in test files.
 - [test-title](docs/rules/test-title.md) - Ensure tests have a title.
 - [use-t-well](docs/rules/use-t-well.md) - Prevent the incorrect use of `t`.
 - [use-t](docs/rules/use-t.md) - Ensure test functions use `t` as their parameter.
-- [use-test](docs/rules/use-test.md) - Ensure that AVA is imported with `test` as the variable name.
+- [use-test](docs/rules/use-test.md) - Ensure that tape is imported with `test` as the variable name.
 
 
 ## Recommended config
