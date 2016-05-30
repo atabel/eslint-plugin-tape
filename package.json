@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-tape",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ESLint rules for tape",
   "license": "MIT",
   "repository": "atabel/eslint-plugin-tape",
