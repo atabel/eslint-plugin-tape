@@ -17,6 +17,7 @@
   "files": [
     "index.js",
     "create-tape-rule.js",
+    "tape-assertion-methods.js",
     "util.js",
     "rules"
   ],
