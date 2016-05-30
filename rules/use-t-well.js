@@ -5,7 +5,8 @@ var tapeAssertionMethods = require('../tape-assertion-methods');
 
 var methods = [
 	'end',
-	'plan'
+	'plan',
+	'test'
 ].concat(Object.keys(tapeAssertionMethods));
 
 function isMethod(name) {
