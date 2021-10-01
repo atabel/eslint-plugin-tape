@@ -6,6 +6,7 @@ var tapeAssertionMethods = require('../tape-assertion-methods');
 var methods = [
 	'end',
 	'plan',
+	'teardown',
 	'test'
 ].concat(Object.keys(tapeAssertionMethods));
 
